@@ -12,8 +12,14 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = React.useState();
   const [loading, setLoading] = React.useState(false);
 
+  //Função que faz o sign up (segundo as credenciais do Firebase)
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  //Função que faz o login (segundo as credenciais do Firebase)
+  function login(email, password) {
+    return auth.signInWithEmailAndPassword(email, password);
   }
 
   //we just want to run this when we mount our component
@@ -33,6 +39,7 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     signup,
+    login,
   };
 
   return (
