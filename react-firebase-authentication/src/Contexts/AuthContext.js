@@ -10,6 +10,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = React.useState();
+  const [loading, setLoading] = React.useState(false);
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -21,6 +22,9 @@ export function AuthProvider({ children }) {
     //this onAuthStateChange event
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
+      //We're making sure that we don't render any of our application until we have our current user being set
+      //for the very first time
+      setLoading(false);
     });
 
     return unsubscribe;
@@ -31,5 +35,9 @@ export function AuthProvider({ children }) {
     signup,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 }
