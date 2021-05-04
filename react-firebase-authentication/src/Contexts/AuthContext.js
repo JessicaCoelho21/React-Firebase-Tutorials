@@ -22,6 +22,11 @@ export function AuthProvider({ children }) {
     return auth.signInWithEmailAndPassword(email, password);
   }
 
+  //Função que faz logout
+  function logout() {
+    return auth.signOut();
+  }
+
   //we just want to run this when we mount our component
   React.useEffect(() => {
     //onAuthStateChange method actually returns a method that, when we call this method, it'll unsubscribe
@@ -40,6 +45,7 @@ export function AuthProvider({ children }) {
     currentUser,
     signup,
     login,
+    logout,
   };
 
   return (
